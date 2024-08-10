@@ -1,7 +1,5 @@
 <h1>Recipes</h1>
 
-<% json_string = params[:ingredients] %>
-<% ingredients_array = JSON.parse(json_string) %>
-<% ingredients_array.each do |ingredient| %>
-    <%= ingredient['value'] %>
+<% @recipes.each do |recipe| %>
+    <%= link_to recipe.title, recipe_path(recipe) %>
 <% end %>

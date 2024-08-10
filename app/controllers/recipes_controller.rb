@@ -1,7 +1,12 @@
 class RecipesController < ApplicationController
   def index
-    parsed_ingredients = JSON.parse(params[:ingredients])
-    ingredients_array = ingredients_array.map { |ingredient| ingredient['value'] }
+    user_ingredients = JSON.parse(params[:ingredients])
+    ingredients_array = user_ingredients.map { |ingredient| ingredient['value'] }
+    @recipes = Recipe.all.select do |recipe|
+      ingredients_array.all? do |ingredient|
+        recipe.ingredients.any? { |x| x.downcase.include?(ingredient.downcase) }
+      end
+    end
   end
 
   def show
