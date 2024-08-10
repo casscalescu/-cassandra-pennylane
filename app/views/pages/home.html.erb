@@ -1,12 +1,11 @@
-<div class="text-center">
-    <h1>What ingredients do you have on hand?</h1>
+<h1 class="text-center">What ingredients do you have on hand?</h1>
 
-    <div class="row justify-content-center">
-        <div class="col-sm-6 my-3">
-            <%= form_with url: recipes_path, method: :get do |form| %>
-                <%= form.label :ingredients, "Type ingredients:", class: "form-label" %>
-                <%= form.text_field :ingredients, id: "ingredients-input", placeholder: "sweet potatoes", class: "form-control bg-white" %>
-            <% end %>
-        </div>
+<div class="row justify-content-center">
+    <div class="col-sm-6 my-3">
+        <%= form_with url: recipes_path, method: :get do |form| %>
+            <%= form.label :ingredients, "Type ingredients:", class: "form-label" %>
+            <%= form.text_field :ingredients, id: "ingredients-input", class: "form-control bg-white" %>
+            <%= form.submit %>
+        <% end %>
     </div>
 </div>

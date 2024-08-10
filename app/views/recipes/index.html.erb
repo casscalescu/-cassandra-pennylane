@@ -1,2 +1,7 @@
-<h1>Recipes#index</h1>
-<p>Find me in app/views/recipes/index.html.erb</p>
+<h1>Recipes</h1>
+
+<% json_string = params[:ingredients] %>
+<% ingredients_array = JSON.parse(json_string) %>
+<% ingredients_array.each do |ingredient| %>
+    <%= ingredient['value'] %>
+<% end %>

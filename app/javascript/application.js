@@ -8,5 +8,5 @@ import Tagify from '@yaireo/tagify'
 // Initialize Tagify on the input field
 const input = document.getElementById('ingredients-input');
 if (input) {
-    const tagify = new Tagify(input);
+    new Tagify(input);
 }
