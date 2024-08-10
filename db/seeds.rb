@@ -24,6 +24,7 @@ recipes.each do |recipe|
     new_recipe.cuisine = recipe['cuisine']
     new_recipe.category = recipe['category']
     new_recipe.author = recipe['author']
+    new_recipe.image = recipe['image']
     new_recipe.save!
 end
 
