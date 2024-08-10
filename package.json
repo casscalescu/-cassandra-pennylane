@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@yaireo/tagify": "^4.27.0",
+    "select2": "^4.1.0-rc.0"
+  }
+}
