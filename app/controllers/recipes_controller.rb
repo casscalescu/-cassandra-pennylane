@@ -7,7 +7,7 @@ class RecipesController < ApplicationController
         recipe.ingredients.any? { |x| x.downcase.split.include?(ingredient.downcase) }
       end
     end
-    @recipes = filter_recipes.sort_by { |recipe| recipe.ingredients.count }.first(10)
+    @recipes = filter_recipes.sort_by { |recipe| recipe.ingredients.count - ingredients_array.count }.first(10)
   end
 
   def show
