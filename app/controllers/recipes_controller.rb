@@ -2,11 +2,12 @@ class RecipesController < ApplicationController
   def index
     user_ingredients = JSON.parse(params[:ingredients])
     ingredients_array = user_ingredients.map { |ingredient| ingredient['value'] }
-    @recipes = Recipe.all.select do |recipe|
+    filter_recipes = Recipe.all.select do |recipe|
       ingredients_array.all? do |ingredient|
-        recipe.ingredients.any? { |x| x.downcase.include?(ingredient.downcase) }
+        recipe.ingredients.any? { |x| x.downcase.split.include?(ingredient.downcase) }
       end
     end
+    @recipes = filter_recipes.sort_by { |recipe| recipe.ingredients.count }.first(10)
   end
 
   def show
