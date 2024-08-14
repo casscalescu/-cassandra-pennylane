@@ -3,32 +3,50 @@ class RecipesController < ApplicationController
     if params[:ingredients] != ""
       user_ingredients = JSON.parse(params[:ingredients])
       ingredients_array = user_ingredients.map { |ingredient| ingredient['value'] }
-      filter_recipes = Recipe.all.select do |recipe|
-        ingredients_array.all? do |ingredient|
-          # split to look at each word => avoid "apple" matching "pineapple" in a String
-          recipe.ingredients.any? { |x| x.downcase.split.include?(ingredient.downcase) }
-        end
-      end
-      if filter_recipes.count > 1
-        @recipes = filter_recipes.sort_by { |recipe| recipe.ingredients.count - ingredients_array.count }.first(10)
+      recipe_results = recipes_exact_match(ingredients_array)
+      if recipe_results.count > 1
+        @recipes = recipe_results.sort_by { |recipe| recipe.ingredients.count - ingredients_array.count }.first(10)
       else
-        suggested_recipes = Recipe.all.select do |recipe|
-          ingredients_array.any? do |user_ingredient|
-            recipe.ingredients.any? do |recipe_ingredient|
-              recipe_ingredient.split.include?(user_ingredient.downcase)
-            end
-          end
-        end
+        suggested_recipes = recipes_conditional_match(ingredients_array)
         @recipes = suggested_recipes.shuffle.first(10)
-      end
+      end 
       @message = "Your top results..."
     else
-      @recipes = Recipe.order('RANDOM()').limit(10)
+      @recipes = recipes_random
       @message = "Oops you didn't tell us what ingredients you have... here's some recipes you may like"
     end
   end
 
   def show
+    set_recipe
+  end
+
+  private
+
+  def set_recipe
     @recipe = Recipe.find(params[:id])
+  end
+
+  def recipes_exact_match(ingredients_array)
+    Recipe.all.select do |recipe|
+      ingredients_array.all? do |ingredient|
+        # split to look at each word => avoid "apple" matching "pineapple" in a String
+        recipe.ingredients.any? { |x| x.downcase.split.include?(ingredient.downcase) }
+      end
+    end
+  end
+
+  def recipes_conditional_match(ingredients_array)
+    Recipe.all.select do |recipe|
+      ingredients_array.any? do |user_ingredient|
+        recipe.ingredients.any? do |recipe_ingredient|
+          recipe_ingredient.split.include?(user_ingredient.downcase)
+        end
+      end
+    end
+  end
+
+  def recipes_random
+    Recipe.order('RANDOM()').limit(10)
   end
 end
