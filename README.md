@@ -17,3 +17,15 @@ For the final setup for the packages, gems, remotes, prepping databases, and see
 ```
 bin/setup
 ```
+
+## User Stories
+* As a user, I can input all the ingredients I have on hand
+* As a user, I can see 10 results with recipes that each include all the ingredients I have (ordered by minimum extra ingredients needed)
+* As a user, if my ingredients match less than 10 recipes, I see an additional bonus 10 recipes, all including at least 1 ingredient I have
+* As a user, if I don't input any ingredients, I can browse through 10 random recipes
+
+## Testing
+To run the test suite run:
+```
+bundle exec rspec
+```
