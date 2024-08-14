@@ -1,16 +1,17 @@
 class RecipesController < ApplicationController
   def index
-    if params[:ingredients] != ""
+    if params[:ingredients].present?
       user_ingredients = JSON.parse(params[:ingredients])
       ingredients_array = user_ingredients.map { |ingredient| ingredient['value'] }
       recipe_results = recipes_exact_match(ingredients_array)
       if recipe_results.count > 1
         @recipes = recipe_results.sort_by { |recipe| recipe.ingredients.count - ingredients_array.count }.first(10)
+        @message = "Your top results..."
       else
         suggested_recipes = recipes_conditional_match(ingredients_array)
         @recipes = suggested_recipes.shuffle.first(10)
+        @message = "Your top results + some suggested recipes containing some of your ingredients"
       end 
-      @message = "Your top results..."
     else
       @recipes = recipes_random
       @message = "Oops you didn't tell us what ingredients you have... here's some recipes you may like"
@@ -28,6 +29,8 @@ class RecipesController < ApplicationController
   end
 
   def recipes_exact_match(ingredients_array)
+    ingredients_array = ingredients_array.map(&:downcase) # Normalize the ingredient names
+
     Recipe.all.select do |recipe|
       ingredients_array.all? do |ingredient|
         # split to look at each word => avoid "apple" matching "pineapple" in a String
