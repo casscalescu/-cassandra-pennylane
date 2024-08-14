@@ -52,8 +52,8 @@ RSpec.describe "Recipes", type: :request do
             'Apple Turnovers'
         ]
 
-        recipes = doc.css('ol li a').map(&:text)
-
+        recipes = doc.css('li a').map(&:text)
+        
         expected_recipes.each do |recipe|
             expect(recipes).to include(recipe)
         end
