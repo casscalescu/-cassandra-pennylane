@@ -1,5 +1,17 @@
 <h1>Recipes</h1>
+<p><%= @message %></p>
 
-<% @recipes.each do |recipe| %>
-    <%= link_to recipe.title, recipe_path(recipe) %>
+<ol>
+    <% @recipes.first(10).each do |recipe| %>
+        <li><%= link_to recipe.title, recipe_path(recipe) %></li>
+    <% end %>
+</ol>
+
+<% unless @additional_recipes.nil? %>
+    <p><%= @additional_message %></p>
+    <% @additional_recipes.each do |recipe| %>
+        <li><%= link_to recipe.title, recipe_path(recipe) %></li>
+    <% end %>
 <% end %>
+
+<%= link_to "Search again", root_path, class: "btn btn-primary mt-3" %>
