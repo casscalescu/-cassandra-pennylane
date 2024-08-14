@@ -7,4 +7,11 @@
     <% end %>
 </ol>
 
-<%= link_to "Search again", root_path %>
+<% unless @additional_recipes.nil? %>
+    <p><%= @additional_message %></p>
+    <% @additional_recipes.each do |recipe| %>
+        <li><%= link_to recipe.title, recipe_path(recipe) %></li>
+    <% end %>
+<% end %>
+
+<%= link_to "Search again", root_path, class: "btn btn-primary mt-3" %>

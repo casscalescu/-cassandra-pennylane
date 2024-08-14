@@ -2,10 +2,10 @@
 
 <div class="row justify-content-center">
     <div class="col-sm-6 my-3">
-        <%= form_with url: recipes_path, data: { controller: "tagify" }, method: :get do |form| %>
+        <%= form_with url: recipes_path, data: { controller: "tagify" }, class: "d-flex flex-column", method: :get do |form| %>
             <%= form.label :ingredients, "Type ingredients:", class: "form-label" %>
             <%= form.text_field :ingredients, id: "ingredients", class: "form-control bg-white", data: { tagify_target: "ingredientInput" } %>
-            <%= form.submit "Find recipes" %>
+            <%= form.submit "Find recipes", class: "btn btn-primary mt-2" %>
         <% end %>
     </div>
 </div>
