@@ -1,12 +1,15 @@
 class Recipe < ApplicationRecord
-    def self.recipes_exact_match(ingredients_array)
-        ingredients_array.map(&:downcase)
+    include PgSearch::Model
 
-        Recipe.all.select do |recipe|
-            ingredients_array.all? do |ingredient|
-                recipe.ingredients.any? { |x| x.downcase.split.include?(ingredient) }
-            end
-        end
+    pg_search_scope :search_by_ingredients,
+        against: :ingredients,
+        using: {
+            tsearch: { prefix: true }
+        }
+    
+    def self.recipes_exact_match(ingredients_array)
+        query_string = ingredients_array.map(&:downcase).join(' & ')
+        search_by_ingredients(query_string)
     end
 
     def self.recipes_conditional_match(ingredients_array)
@@ -19,7 +22,7 @@ class Recipe < ApplicationRecord
             end
           end
         end
-      end
+    end
 
     def self.random_recipes
         order('RANDOM()').limit(10)
