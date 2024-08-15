@@ -11,7 +11,10 @@
     <% unless @additional_recipes.nil? %>
         <p><%= @additional_message %></p>
         <% @additional_recipes.each do |recipe| %>
-            <li><%= link_to recipe.title, recipe_path(recipe) %></li>
+            <li>
+                <%= link_to recipe.title, recipe_path(recipe) %>
+                <em>(Matched: <%= recipe.display_matched_ingredient(@ingredients_array) %>)</em>
+            </li>
         <% end %>
     <% end %>
 </div>
