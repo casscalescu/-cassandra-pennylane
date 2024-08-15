@@ -24,6 +24,11 @@ bin/setup
 * As a user, if my ingredients match less than 10 recipes, I see an additional bonus 10 recipes, all including at least 1 ingredient I have
 * As a user, if I don't input any ingredients, I can browse through 10 random recipes
 
+## DB Schema
+
+<img width="412" alt="Screenshot 2024-08-15 at 4 02 41 pm" src="https://github.com/user-attachments/assets/ed6108bc-ea53-4f88-97dc-cb47d143272a">
+
+
 ## Testing
 To run the test suite run:
 ```
