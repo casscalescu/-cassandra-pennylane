@@ -18,7 +18,7 @@ class RecipesController < ApplicationController
         @recipe_ids = @recipes.map(&:id)
         recipes_filtered = suggested_recipes.reject { |recipe| @recipe_ids.include?(recipe.id) }
         @additional_recipes = recipes_filtered.shuffle.first(10 - recipe_results.size)
-        @additional_message = "Since your results are so short, here's some additional recipes to inspire you..."
+        @additional_message = @additional_recipes.empty? ? "" : "Since your results are so short, here's some additional recipes to inspire you..."
       end
     else
       # No ingredients passed
