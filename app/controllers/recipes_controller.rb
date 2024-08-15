@@ -9,14 +9,15 @@ class RecipesController < ApplicationController
       @recipes = recipe_results
         .sort_by { |recipe| recipe.ingredients.count - ingredients_array.count }
         .first(10)
-      @message = "Your top results..."
+
+      @message = @recipes.empty? ? "Oops we couldn't find recipes with all your ingredients..." : "Your top results..."
       
       # Conditional match
       if recipe_results.size < 10
         suggested_recipes = Recipe.recipes_conditional_match(ingredients_array)
         @recipe_ids = @recipes.map(&:id)
         recipes_filtered = suggested_recipes.reject { |recipe| @recipe_ids.include?(recipe.id) }
-        @additional_recipes = recipes_filtered.shuffle.first(10)
+        @additional_recipes = recipes_filtered.shuffle.first(10 - recipe_results.size)
         @additional_message = "Since your results are so short, here's some additional recipes to inspire you..."
       end
     else

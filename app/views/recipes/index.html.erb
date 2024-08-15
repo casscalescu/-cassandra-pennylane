@@ -11,7 +11,7 @@
     <% unless @additional_recipes.nil? %>
         <p><%= @additional_message %></p>
         <% @additional_recipes.each do |recipe| %>
-            <li><%= link_to recipe.title, recipe_path(recipe) %></li>
+            <li><%= link_to recipe.title, recipe_path(recipe) %><%= @matching_ingredients %></li>
         <% end %>
     <% end %>
 </div>
