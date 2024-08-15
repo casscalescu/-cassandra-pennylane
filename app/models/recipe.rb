@@ -25,4 +25,12 @@ class Recipe < ApplicationRecord
     def self.random_recipes
         order('RANDOM()').limit(10)
     end
+
+    def display_matched_ingredient(ingredients_array)
+        ingredients_array.select do |ingredient|
+            self.ingredients.any? do |recipe_ingredient|
+              recipe_ingredient.split.include?(ingredient)
+            end
+        end.join(", ")
+    end
 end
