@@ -1,17 +1,19 @@
 <h1>Recipes</h1>
 <p><%= @message %></p>
 
-<ol>
-    <% @recipes.first(10).each do |recipe| %>
-        <li><%= link_to recipe.title, recipe_path(recipe) %></li>
-    <% end %>
-</ol>
+<div class="recipe-results">
+    <ol>
+        <% @recipes.first(10).each do |recipe| %>
+            <li><%= link_to recipe.title, recipe_path(recipe) %></li>
+        <% end %>
+    </ol>
 
-<% unless @additional_recipes.nil? %>
-    <p><%= @additional_message %></p>
-    <% @additional_recipes.each do |recipe| %>
-        <li><%= link_to recipe.title, recipe_path(recipe) %></li>
+    <% unless @additional_recipes.nil? %>
+        <p><%= @additional_message %></p>
+        <% @additional_recipes.each do |recipe| %>
+            <li><%= link_to recipe.title, recipe_path(recipe) %></li>
+        <% end %>
     <% end %>
-<% end %>
+</div>
 
 <%= link_to "Search again", root_path, class: "btn btn-primary mt-3" %>

@@ -27,7 +27,7 @@ RSpec.describe "Recipes", type: :request do
 
         doc = Nokogiri::HTML(response.body)
 
-        recipes = doc.css('ol li a').map(&:text)
+        recipes = doc.css('.recipe-results li a').map(&:text)
         
         expect(recipes).to include('Banana Strawberry Muffins')
         expect(recipes).to include('Strawberry Banana Smoothie')
@@ -52,8 +52,8 @@ RSpec.describe "Recipes", type: :request do
             'Apple Turnovers'
         ]
 
-        recipes = doc.css('ol li a').map(&:text)
-
+        recipes = doc.css('.recipe-results li a').map(&:text)
+        
         expected_recipes.each do |recipe|
             expect(recipes).to include(recipe)
         end
