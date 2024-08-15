@@ -1,20 +1,26 @@
 class RecipesController < ApplicationController
   def index
     if params[:ingredients].present?
-      # match all ingredients
       user_ingredients = JSON.parse(params[:ingredients])
       ingredients_array = user_ingredients.map { |ingredient| ingredient['value'] }
+
+      # Exact match
       recipe_results = Recipe.recipes_exact_match(ingredients_array)
-      @recipes = recipe_results.sort_by { |recipe| recipe.ingredients.count - ingredients_array.count }.first(10)
+      @recipes = recipe_results
+        .sort_by { |recipe| recipe.ingredients.count - ingredients_array.count }
+        .first(10)
       @message = "Your top results..."
-      # match some ingredients
-      if recipe_results.count < 10
+      
+      # Conditional match
+      if recipe_results.size < 10
         suggested_recipes = Recipe.recipes_conditional_match(ingredients_array)
-        @additional_recipes = suggested_recipes.shuffle.first(10)
+        @recipe_ids = @recipes.map(&:id)
+        recipes_filtered = suggested_recipes.reject { |recipe| @recipe_ids.include?(recipe.id) }
+        @additional_recipes = recipes_filtered.shuffle.first(10)
         @additional_message = "Since your results are so short, here's some additional recipes to inspire you..."
       end
-    # no ingredients passed
     else
+      # No ingredients passed
       @recipes = Recipe.random_recipes
       @message = "Oops you didn't tell us what ingredients you have... here's some recipes you might like"
     end

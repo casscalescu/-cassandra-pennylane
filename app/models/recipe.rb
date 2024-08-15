@@ -13,8 +13,6 @@ class Recipe < ApplicationRecord
     end
 
     def self.recipes_conditional_match(ingredients_array)
-        ingredients_array.map(&:downcase)
-
         Recipe.all.select do |recipe|
           ingredients_array.any? do |user_ingredient|
             recipe.ingredients.any? do |recipe_ingredient|
