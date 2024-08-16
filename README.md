@@ -20,6 +20,12 @@ For the final setup for the packages, gems, remotes, prepping databases, and see
 bin/setup
 ```
 
+Launch server
+```
+rails s
+```
+
+
 ## User Stories
 * As a user, I can input all the ingredients I have on hand
 * As a user, I can see 10 results with recipes that each include all the ingredients I have (ordered by minimum extra ingredients needed)
