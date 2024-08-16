@@ -2,6 +2,8 @@
 
 This Ruby on Rails application helps users find the most relevant recipes that they can prepare with the ingredients that they have at home.
 
+Hosted on fly.io <a href="https://cassandra-pennylane.fly.dev/">https://cassandra-pennylane.fly.dev/</a>
+
 ## Environment Setup
 
 This application is using:
